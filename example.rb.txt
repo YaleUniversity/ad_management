@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'bundler/setup'
+require_relative 'yaleits_ad_manager'
+require 'dotenv'
+
+Dotenv.load
+
+# Replace with specific values
+computer_account = '__ActiveDirectoryComputerAccount__'
+owner_id         = '__ActiveDirectoryUserAccount__'
+computer_ou_dn   = '__ComputerOUDistinguishedName__'
+
+
+# Create a new ad_manager instance using service account credentials
+ad_manager_svc_acct = YaleitsAdManager.new(ENV['SVC_ACCT'], ENV['SVC_PASS'])
+
+# display a computer accounts DistinguishedName
+# puts ad_manager_svc_acct.dn(computer_account)
+
+# delete a computer account in ActiveDirectory
+#ad_manager_svc_acct.delete_computer(computer_account)
+
+# create a new computer account in ActiveDirectory
+#ad_manager_svc_acct.create_computer(owner_id, computer_account, computer_ou_dn)

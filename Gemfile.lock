@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    dotenv (2.2.0)
+    net-ldap (0.16.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  dotenv
+  net-ldap
+
+BUNDLED WITH
+   1.14.6
