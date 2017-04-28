@@ -14,14 +14,14 @@ class YaleitsAdManager
 
     connection =
       Net::LDAP.new(
-        { host:         SERVER,
-          port:         PORT,
-          encryption:   { method:       :simple_tls,
-                          tls_options:
-                            OpenSSL::SSL::SSLContext::DEFAULT_PARAMS },
-          auth:         { method:       :simple,
-                          username:     account,
-                          password:     password } }
+        host:         SERVER,
+        port:         PORT,
+        encryption:   { method:       :simple_tls,
+                        tls_options:
+                          OpenSSL::SSL::SSLContext::DEFAULT_PARAMS },
+        auth:         { method:       :simple,
+                        username:     account,
+                        password:     password }
       )
     connection.bind && connection || nil
   rescue Net::LDAP::LdapError => e
