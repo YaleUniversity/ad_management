@@ -3,10 +3,10 @@ require 'bundler/setup'
 require 'net/ldap'
 
 class YaleitsAdManager
-  SERVER = 'ad.its.yale.edu'
-  PORT = 636
-  BASE_DN = 'dc=yu,dc=yale,dc=edu'
-  DOMAIN = 'yu.yale.edu'
+  SERVER = 'ad.its.yale.edu'.freeze
+  PORT = 636.freeze
+  BASE_DN = 'dc=yu,dc=yale,dc=edu'.freeze
+  DOMAIN = 'yu.yale.edu'.freeze
 
   def connect(account, password)
     return nil if account.empty? or password.empty?
@@ -38,9 +38,9 @@ class YaleitsAdManager
     owner_id_dn = dn(owner_id)
     account_attrs = {
       cn:               ad_account,
-      sAMAccountName:   "#{ad_account}$",
+      sAMAccountName:   ad_account +'$',
       objectClass:      [ 'computer', 'organizationalPerson', 'person',
-                            'top',      'user' ],
+                          'top',      'user' ],
       managedBy:        owner_id_dn
     }
     results = {}
@@ -53,8 +53,8 @@ class YaleitsAdManager
   end
 
   def dn(ad_account)
-    l_filter = Net::LDAP::Filter.eq("sAMAccountName", "#{ad_account}")
-    r_filter = Net::LDAP::Filter.eq("sAMAccountName", "#{ad_account}$")
+    l_filter = Net::LDAP::Filter.eq('sAMAccountName', ad_account)
+    r_filter = Net::LDAP::Filter.eq('sAMAccountName', ad_account + '$')
     filter = Net::LDAP::Filter.intersect(l_filter, r_filter)
     entry = @ad_connection.search(
       base:    BASE_DN,
