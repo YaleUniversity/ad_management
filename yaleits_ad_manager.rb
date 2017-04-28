@@ -4,7 +4,7 @@ require 'net/ldap'
 
 class YaleitsAdManager
   SERVER = 'ad.its.yale.edu'.freeze
-  PORT = 636.freeze
+  PORT = 636
   BASE_DN = 'dc=yu,dc=yale,dc=edu'.freeze
   DOMAIN = 'yu.yale.edu'.freeze
 
@@ -16,21 +16,20 @@ class YaleitsAdManager
         { host:         SERVER,
           port:         PORT,
           encryption:   { method:       :simple_tls,
-                          tls_options: 
-                             OpenSSL::SSL::SSLContext::DEFAULT_PARAMS},
+                          tls_options:
+                            OpenSSL::SSL::SSLContext::DEFAULT_PARAMS },
           auth:         { method:       :simple,
                           username:     account,
                           password:     password } }
-    )
+      )
     connection.bind && connection || nil
-
-  rescue Net::LDAP::LdapError => e 
+  rescue Net::LDAP::LdapError => e
     return nil
   end
 
   def delete_computer(ad_account)
     account_dn = dn(ad_account)
-    @ad_connection.delete(dn:  account_dn) unless account_dn.nil?
+    @ad_connection.delete(dn: account_dn) unless account_dn.nil?
   end
 
   def create_computer(owner_id, ad_account, ad_ou)
@@ -38,9 +37,9 @@ class YaleitsAdManager
     owner_id_dn = dn(owner_id)
     account_attrs = {
       cn:               ad_account,
-      sAMAccountName:   ad_account +'$',
-      objectClass:      [ 'computer', 'organizationalPerson', 'person',
-                          'top',      'user' ],
+      sAMAccountName:   ad_account + '$',
+      objectClass:      ['computer', 'organizationalPerson', 'person',
+                         'top',      'user'],
       managedBy:        owner_id_dn
     }
     results = {}
