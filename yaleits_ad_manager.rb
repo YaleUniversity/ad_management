@@ -24,7 +24,7 @@ class YaleitsAdManager
                         password:     password }
       )
     connection.bind && connection || nil
-  rescue Net::LDAP::LdapError => e
+  rescue Net::LDAP::LdapError
     return nil
   end
 
