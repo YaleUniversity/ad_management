@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'net/ldap'
 
+# YaleitsAdManager: manages Yale University ActiveDirectory objects
 class YaleitsAdManager
   SERVER = 'ad.its.yale.edu'.freeze
   PORT = 636
