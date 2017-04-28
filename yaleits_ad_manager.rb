@@ -13,40 +13,40 @@ class YaleitsAdManager
 
     connection =
       Net::LDAP.new(
-        { :host        => SERVER,
-          :port        => PORT,
-          :encryption  => { :method      => :simple_tls,
-                            :tls_options =>
+        { host:         SERVER,
+          port:         PORT,
+          encryption:   { method:       :simple_tls,
+                          tls_options: 
                              OpenSSL::SSL::SSLContext::DEFAULT_PARAMS},
-          :auth        => { :method      => :simple,
-                            :username    => account,
-                            :password    => password } }
+          auth:         { method:       :simple,
+                          username:     account,
+                          password:     password } }
     )
     connection.bind && connection || nil
 
-  rescue Net::LDAP::LdapError => e
+  rescue Net::LDAP::LdapError => e 
     return nil
   end
 
   def delete_computer(ad_account)
     account_dn = dn(ad_account)
-    @ad_connection.delete(:dn => account_dn) unless account_dn.nil?
+    @ad_connection.delete(dn:  account_dn) unless account_dn.nil?
   end
 
   def create_computer(owner_id, ad_account, ad_ou)
     account_dn = "CN=#{ad_account},#{ad_ou}"
     owner_id_dn = dn(owner_id)
     account_attrs = {
-      :cn              => ad_account,
-      :sAMAccountName  => "#{ad_account}$",
-      :objectClass     => [ 'computer', 'organizationalPerson', 'person',
+      cn:               ad_account,
+      sAMAccountName:   "#{ad_account}$",
+      objectClass:      [ 'computer', 'organizationalPerson', 'person',
                             'top',      'user' ],
-      :managedBy       => owner_id_dn
+      managedBy:        owner_id_dn
     }
     results = {}
     @ad_connection.add(
-      :dn         => account_dn,
-      :attributes => account_attrs
+      dn:          account_dn,
+      attributes:  account_attrs
     )
     results[0] = @ad_connection.get_operation_result
     puts results[0]
@@ -57,10 +57,10 @@ class YaleitsAdManager
     r_filter = Net::LDAP::Filter.eq("sAMAccountName", "#{ad_account}$")
     filter = Net::LDAP::Filter.intersect(l_filter, r_filter)
     entry = @ad_connection.search(
-      :base   => BASE_DN,
-      :filter => filter
+      base:    BASE_DN,
+      filter:  filter
     ).first
-    entry && entry.dn || nil 
+    entry && entry.dn || nil
   end
 
   def initialize(account, password)
