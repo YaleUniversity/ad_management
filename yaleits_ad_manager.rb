@@ -9,7 +9,7 @@ class YaleitsAdManager
   DOMAIN = 'yu.yale.edu'.freeze
 
   def connect(account, password)
-    return nil if account.empty? or password.empty?
+    return nil if account.empty? || password.empty?
 
     connection =
       Net::LDAP.new(
