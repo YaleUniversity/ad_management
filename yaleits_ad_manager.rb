@@ -12,17 +12,12 @@ class YaleitsAdManager
   def connect(account, password)
     return nil if account.empty? || password.empty?
 
-    connection =
-      Net::LDAP.new(
-        host:         SERVER,
-        port:         PORT,
-        encryption:   { method:       :simple_tls,
-                        tls_options:
-                          OpenSSL::SSL::SSLContext::DEFAULT_PARAMS },
-        auth:         { method:       :simple,
-                        username:     account,
-                        password:     password }
-      )
+    connection = Net::LDAP.new(
+      host: SERVER, port: PORT,
+      auth:       { username: account, password: password, method: :simple },
+      encryption: { method:     :simple_tls,
+                    tls_options: OpenSSL::SSL::SSLContext::DEFAULT_PARAMS }
+    )
     connection.bind && connection || nil
   rescue Net::LDAP::LdapError
     return nil
@@ -39,16 +34,10 @@ class YaleitsAdManager
     account_attrs = {
       cn:               ad_account,
       sAMAccountName:   ad_account + '$',
-      objectClass:      %w[computer organizationalPerson person top user],
-      managedBy:        owner_id_dn
+      managedBy:        owner_id_dn,
+      objectClass:      %w[computer organizationalPerson person top user]
     }
-    results = {}
-    @ad_connection.add(
-      dn:          account_dn,
-      attributes:  account_attrs
-    )
-    results[0] = @ad_connection.get_operation_result
-    puts results[0]
+    @ad_connection.add(dn: account_dn, attributes: account_attrs)
   end
 
   def dn(ad_account)
