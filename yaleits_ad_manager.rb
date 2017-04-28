@@ -38,8 +38,7 @@ class YaleitsAdManager
     account_attrs = {
       cn:               ad_account,
       sAMAccountName:   ad_account + '$',
-      objectClass:      ['computer', 'organizationalPerson', 'person',
-                         'top',      'user'],
+      objectClass:      %w[computer organizationalPerson person top user],
       managedBy:        owner_id_dn
     }
     results = {}
