@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-source "https://rubygems.org"
 
-gem 'net-ldap'
+source 'https://rubygems.org'
+
 gem 'dotenv'
-
-# gem "rails"
+gem 'net-ldap'

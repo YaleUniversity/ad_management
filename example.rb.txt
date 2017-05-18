@@ -7,24 +7,21 @@ require 'dotenv'
 
 Dotenv.load
 
-# Replace with specific values
+## Replace with specific values
 computer_account = '__ActiveDirectoryComputerAccount__'
 owner_id         = '__ActiveDirectoryUserAccount__'
 computer_ou_dn   = '__ComputerOUDistinguishedName__'
 
 
-# Create a new ad_manager instance using service account credentials
+## Create a new ad_manager instance using service account credentials
 
-ad_manager_svc_acct = YaleitsAdManager.new(ENV['SVC_ACCT'], ENV['SVC_PASS'])
+YaleitsAdManager.connect(ENV['SVC_ACCT'], ENV['SVC_PASS'])
 
-# Display a computer accounts DistinguishedName
+## Display a computer accounts DistinguishedName
+# puts YaleitsAdManager.dn(computer_account)
 
-#puts ad_manager_svc_acct.dn(computer_account)
+## Delete a computer account in ActiveDirectory
+# YaleitsAdManager.delete_computer(computer_account)
 
-# Delete a computer account in ActiveDirectory
-
-#ad_manager_svc_acct.delete_computer(computer_account)
-
-# Create a new computer account in ActiveDirectory
-
-#ad_manager_svc_acct.create_computer(owner_id, computer_account, computer_ou_dn)
+## Create a new computer account in ActiveDirectory
+# YaleitsAdManager.create_computer(owner_id, computer_account, computer_ou_dn)
