@@ -2,7 +2,7 @@
 
 require 'rubygems'
 require 'bundler/setup'
-require_relative 'yaleits_ad_manager'
+require_relative 'ad_management'
 require 'dotenv'
 
 Dotenv.load
@@ -18,7 +18,7 @@ computer_ou_dn   = '__ComputerOUDistinguishedName__'
 AdManagement.connect(ENV['SVC_ACCT'], ENV['SVC_PASS'])
 
 ## Display a computer accounts DistinguishedName
-puts AdManagement.dn(computer_account)
+# puts AdManagement.dn(computer_account)
 
 ## Delete a computer account in ActiveDirectory
 # AdManagement.delete_computer(computer_account)
