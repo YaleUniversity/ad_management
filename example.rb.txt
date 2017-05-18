@@ -8,7 +8,7 @@ require 'dotenv'
 Dotenv.load
 
 ## Replace with specific values
-computer_account = '__ActiveDirectoryComputerAccount__'
+computer_account = '__ComputerAccoutName__'
 owner_id         = '__ActiveDirectoryUserAccount__'
 computer_ou_dn   = '__ComputerOUDistinguishedName__'
 
@@ -18,7 +18,7 @@ computer_ou_dn   = '__ComputerOUDistinguishedName__'
 YaleitsAdManager.connect(ENV['SVC_ACCT'], ENV['SVC_PASS'])
 
 ## Display a computer accounts DistinguishedName
-# puts YaleitsAdManager.dn(computer_account)
+puts YaleitsAdManager.dn(computer_account)
 
 ## Delete a computer account in ActiveDirectory
 # YaleitsAdManager.delete_computer(computer_account)
