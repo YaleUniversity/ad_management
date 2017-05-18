@@ -46,3 +46,11 @@ The `dotenv` gem will load the authentication information inside `.env` into the
 * `#dn`: Retrieves the DistinguishedName of an AD object possessing the specified sAMAccountName.
 * `#create_computer`: Creates a new computer object in the specified OU and sets the managedBy attribute to the sAMAccountName of the owner.
 * `#delete_computer`: Deletes the computer object matching the specified sAMAccountName.
+
+## Version 1.0.0
+
+New version has been recast as a module.
+
+* `::dn`: Retrieves the DistinguishedName of an AD object possessing the specified sAMAccountName.
+* `::create_computer`: Creates a new computer object in the specified OU and sets the managedBy attribute to the sAMAccountName of the owner.
+* `::delete_computer`: Deletes the computer object matching the specified sAMAccountName.
