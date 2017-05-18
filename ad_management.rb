@@ -2,8 +2,8 @@ require 'rubygems'
 require 'bundler/setup'
 require 'net/ldap'
 
-# YaleitsAdManager manages Yale University ActiveDirectory objects
-module  YaleitsAdManager
+# AdManagement manages Yale University ActiveDirectory objects
+module  AdManagement
   # Establish defaults for Yale University ActiveDirectory environment
   SERVER = 'ad.its.yale.edu'.freeze
   PORT = 636

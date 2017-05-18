@@ -15,13 +15,13 @@ computer_ou_dn   = '__ComputerOUDistinguishedName__'
 
 ## Create a new ad_manager instance using service account credentials
 
-YaleitsAdManager.connect(ENV['SVC_ACCT'], ENV['SVC_PASS'])
+AdManagement.connect(ENV['SVC_ACCT'], ENV['SVC_PASS'])
 
 ## Display a computer accounts DistinguishedName
-puts YaleitsAdManager.dn(computer_account)
+puts AdManagement.dn(computer_account)
 
 ## Delete a computer account in ActiveDirectory
-# YaleitsAdManager.delete_computer(computer_account)
+# AdManagement.delete_computer(computer_account)
 
 ## Create a new computer account in ActiveDirectory
-# YaleitsAdManager.create_computer(owner_id, computer_account, computer_ou_dn)
+# AdManagement.create_computer(owner_id, computer_account, computer_ou_dn)
