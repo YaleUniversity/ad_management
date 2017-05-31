@@ -46,6 +46,7 @@ module  AdManagement
     return nil
   end
 
+  # Delete a computer
   def self.delete_computer(computer_cn)
     computer_dn = dn_from(computer_cn + '$')
     @ad_connection.delete(dn: computer_dn) unless computer_dn.nil?
