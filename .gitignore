@@ -34,11 +34,8 @@ pkg/
 /.bundle/
 /Gemfile.lock
 
-# examples
-/example/example.rb
+# rspec failure tracking
+.rspec_status
 
 # YAML configuration files
 **/config/*.yml
-
-# rspec failure tracking
-.rspec_status
