@@ -33,6 +33,7 @@ pkg/
 ## Environment normalization gem ceation
 /.bundle/
 /Gemfile.lock
+/vendor/bundle/
 
 # rspec failure tracking
 .rspec_status
