@@ -42,3 +42,4 @@ pkg/
 
 # rspec failure tracking
 .rspec_status
+example/config/connection_settings.yml
