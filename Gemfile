@@ -2,5 +2,5 @@
 
 source 'https://rubygems.org'
 
-gem 'dotenv'
-gem 'net-ldap'
+# Specify your gem's dependencies in ad_management.gemspec
+gemspec

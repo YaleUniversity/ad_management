@@ -30,11 +30,15 @@ pkg/
 /doc/
 /rdoc/
 
-## Environment normalization
+## Environment normalization gem ceation
 /.bundle/
-/vendor/bundle
-/lib/bundler/man/
-bin/
+/Gemfile.lock
 
 # examples
-example.rb
+/example/example.rb
+
+# config
+/config/*.yml
+
+# rspec failure tracking
+.rspec_status
