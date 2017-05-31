@@ -37,9 +37,8 @@ pkg/
 # examples
 /example/example.rb
 
-# config
-/config/*.yml
+# YAML configuration files
+**/config/*.yml
 
 # rspec failure tracking
 .rspec_status
-example/config/connection_settings.yml
