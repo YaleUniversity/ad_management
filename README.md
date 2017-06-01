@@ -35,7 +35,7 @@ The code can the be executed through `bundle`:
 
 ### Examples
 
-Example code is contained in the `example` folder. Each file illustrates basic usage.
+Example code is contained in the `examples` folder. Each file illustrates basic usage.
 
 Before executing, it is required that you create a configuration YAML file to contain AD credentials and connection information used to create an AD ldap binding. The path to this file must be specified as a parameter to the `.configure_from` method.
 
