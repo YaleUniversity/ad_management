@@ -1,56 +1,42 @@
-# Yale ITS ActiveDirectory Manager
+# Yale ITS ActiveDirectory Management Gem
 
-This Ruby class uses the `net-ldap` gem to connect to Yale's ActiveDirectory and manage directory objects.
+This gem is a lightweight wrapper for the `net-ldap` gem. It simplifies connection to Microsoft ActiveDirectory directory services and management of directory objects.
 
 ## Usage
 
+### Installation
+
 Install `bundler`:
 
-```
-gem install bundler
 
-```
-
-Install the application's gems:
-
-```
-bundle install 
-```
-
-Create the file `.env` to  hold the authentication information required  to bind to ActiveDirectory
-
-```
-cp .env.template .env
-```
-
-Change the values for the ActiveDirectory account name and its password:
-
-```
-sed -i 's/__svc_acct_dn__/ Service account DistinguishedName /g'
-sed -i 's/__svc_pass__/ Password, escaping any special characters /g'
-```
-
-(The resulting `.env` will be ignored by `git`.)
-
-The file `example.rb.txt` demonstrates the use of the class and its methods. Create a copy of the file as `example.rb`, make the modifications inside the file, make executable, and run:
-
-```
-bundle exec dotenv ./example.rb
-```
-
-The `dotenv` gem will load the authentication information inside `.env` into the Ruby execution environment and run `example.rb`
+    gem install bundler
 
 
-## Version 0.1.0
+Create a directory to hold your code, change into the directory and create a new GemFile or edit the existing Gemfile to include the following line:
 
-* `#dn`: Retrieves the DistinguishedName of an AD object possessing the specified sAMAccountName.
-* `#create_computer`: Creates a new computer object in the specified OU and sets the managedBy attribute to the sAMAccountName of the owner.
-* `#delete_computer`: Deletes the computer object matching the specified sAMAccountName.
+    gem 'ad_management', :git => 'https://git.yale.edu/spinup/ad_management.git'
 
-## Version 1.0.0
+Edit your code to require the `ad_management` gem:
 
-New version has been recast as a module.
+    require 'ad_management'
 
-* `::dn`: Retrieves the DistinguishedName of an AD object possessing the specified sAMAccountName.
-* `::create_computer`: Creates a new computer object in the specified OU and sets the managedBy attribute to the sAMAccountName of the owner.
-* `::delete_computer`: Deletes the computer object matching the specified sAMAccountName.
+Install the `ad_management` gem by running `bundle`:
+
+    bundle install --path ./vendor/bundle
+
+or
+
+    bundle update
+
+The code can the be executed through `bundle`:
+
+    bundle exec ./[your_code].rb
+
+
+### Examples
+
+Example code is contained in the `example` folder. Each file illustrates basic usage.
+
+Before executing, it is required that you create a configuration YAML file to contain AD credentials and connection information used to create an AD ldap binding. The path to this file must be specified as a parameter to the `.configure_from` method.
+
+The template for these settings is `config\connection_settings.yml.txt`
