@@ -48,8 +48,11 @@ module  AdManagement
 
   # Delete a computer
   def self.delete_computer(computer_cn)
-    computer_dn = dn_from(computer_cn + '$')
-    @ad_connection.delete(dn: computer_dn) unless computer_dn.nil?
+    computer_sam = computer_cn + '$'
+    computer_dn = dn_from(computer_sam)
+    return '' if computer_dn.nil?
+    @ad_connection.delete(dn: computer_dn)
+    return computer_dn if dn_from(computer_sam).nil?
   end
 
   def self.create_computer(owner_id, computer_cn, ad_ou)

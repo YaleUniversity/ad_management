@@ -40,3 +40,13 @@ Example code is contained in the `examples` folder. Each file illustrates basic 
 Before executing, it is required that you create a configuration YAML file to contain AD credentials and connection information used to create an AD ldap binding. The path to this file must be specified as a parameter to the `.configure_from` method.
 
 The template for these settings is `config\connection_settings.yml.txt`
+
+### Version
+
+#### 0.1.0
+
+Initial version
+
+#### 0.2.0
+
+Added return values for `.delete`.

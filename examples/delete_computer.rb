@@ -3,7 +3,7 @@
 require 'ad_management'
 
 ## Replace with specific values
-conputer_cn      = '__ComputerCN__'
+computer_cn      = '__ComputerCN__'
 owner_id         = '__ActiveDirectoryUserAccount__'
 computer_ou_dn   = '__ComputerOUDistinguishedName__'
 
@@ -13,4 +13,5 @@ AdManagement.configure_from('./config/connection_settings.yml')
 AdManagement.connect
 
 ## Delete a computer account in ActiveDirectory
-AdManagement.delete_computer(conputer_cn)
+result = AdManagement.delete_computer(computer_cn)
+puts result
