@@ -3,6 +3,7 @@ require 'rubygems'
 require 'ad_management/version'
 require 'yaml'
 
+# A collection ActiveDirectory management methods wrapped around Ruby `net-ldap`
 module  AdManagement
   # Establish default keys and values for Ad connection
   @ad_settings = {
@@ -16,9 +17,10 @@ module  AdManagement
 
   @ad_connection = nil
 
-  # Configure settings individually
-  # Configure individual settings by referring to the keys in the
-  # @ad_settings variable
+  # Configures ActiveDirectory connections settings individually.
+  #
+  # @param settings [Hash] ActiveDirectory conntection settings
+  # @return [Hash] a hash of ActiveDirectory connection settings.
   def self.configure(settings = {})
     settings.each do |k, v|
       @ad_settings[k.to_sym] = v if @ad_settings.keys.include? k.to_sym
@@ -26,6 +28,9 @@ module  AdManagement
   end
 
   # Configure settings from a yaml file
+  #
+  # @param yaml_file [String] path to YAML
+  # @return [Hash] a hash of ActiveDirectory connection settings.
   def self.configure_from(yaml_file)
     config = YAML.load(IO.read(yaml_file))
     configure(config)
@@ -33,12 +38,16 @@ module  AdManagement
     nil
   end
 
-  # Get settings
+  # Get ActiveDirectory connection settings
+  #
+  # @return [Hash] a hash of ActiveDirectory connection settings.
   def self.settings
     @ad_settings
   end
 
-  # Connect to ActiveDirectory
+  # Connect to ActiveDirectory using connection settings
+  #
+  # @return [Object] an ActiveDirectory/LDAP connection object.
   def self.connect
     @ad_connection = Net::LDAP.new(@ad_settings)
     @ad_connection.bind ? @ad_connection : nil
@@ -46,7 +55,11 @@ module  AdManagement
     return nil
   end
 
-  # Delete a computer
+  # Delete an ActiveDirectory computer object.
+  #
+  # @param computer_cn [String] CommonName of computer object.
+  # @return [String] value, '' or DistinguishedName
+  #   of successfully deleted object.
   def self.delete_computer(computer_cn)
     computer_sam = computer_cn + '$'
     computer_dn = dn_from(computer_sam)
@@ -55,7 +68,12 @@ module  AdManagement
     return computer_dn if dn_from(computer_sam).nil?
   end
 
-  # Create a computer
+  # Create an ActiveDirectory computer object.
+  #
+  # @param owner_id [String] SAMAccountName of ActiveDirectory user.
+  # @param computer_cn [String] CommonName of computer object.
+  # @return [String] value, '' or DistinguishedName
+  #   of successfully created object.
   def self.create_computer(owner_id, computer_cn, ad_ou)
     computer_dn = "CN=#{computer_cn},#{ad_ou}"
     owner_id_dn = dn_from(owner_id)
@@ -69,10 +87,13 @@ module  AdManagement
     dn_from(computer_cn + '$')
   end
 
-  # Gets object distinguished name from SAM account name
-  # NB, the SAM account name of computer objects have a $ sign
-  # appended to their CN to distingush their SAM account names from those of
-  # User objects.
+  # @note The SAMAccountName of a computer object has a `$` character
+  #   appended to the value of its CommonName to distingush its SAMAccountName
+  #   from that of a user object.
+  #
+  # Gets DistinguishedName of an ActiveDirectory object from its SAMAccountName.
+  # @param sam_account_name [String] CommonName of Computer or User object.
+  # @return [String] DistinguishedName of object.
   def self.dn_from(sam_account_name)
     filter = Net::LDAP::Filter.eq('sAMAccountName', sam_account_name)
     entry = @ad_connection.search(
