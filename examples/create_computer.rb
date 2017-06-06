@@ -13,4 +13,5 @@ AdManagement.configure_from('./config/connection_settings.yml')
 AdManagement.connect
 
 ## Create a new computer account in ActiveDirectory
-AdManagement.create_computer(owner_id, computer_cn, computer_ou_dn)
+result = AdManagement.create_computer(owner_id, computer_cn, computer_ou_dn)
+puts result

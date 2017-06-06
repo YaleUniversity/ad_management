@@ -55,6 +55,7 @@ module  AdManagement
     return computer_dn if dn_from(computer_sam).nil?
   end
 
+  # Create a computer
   def self.create_computer(owner_id, computer_cn, ad_ou)
     computer_dn = "CN=#{computer_cn},#{ad_ou}"
     owner_id_dn = dn_from(owner_id)
@@ -65,10 +66,11 @@ module  AdManagement
       objectClass:      %w[computer organizationalPerson person top user]
     }
     @ad_connection.add(dn: computer_dn, attributes: account_attrs)
+    dn_from(computer_cn + '$')
   end
 
   # Gets object distinguished name from SAM account name
-  # NB, the SAM account name of computer objects have a $ sign 
+  # NB, the SAM account name of computer objects have a $ sign
   # appended to their CN to distingush their SAM account names from those of
   # User objects.
   def self.dn_from(sam_account_name)
