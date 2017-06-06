@@ -41,6 +41,25 @@ Before executing, it is required that you create a configuration YAML file to co
 
 The template for these settings is `config\connection_settings.yml.txt`
 
+### Development
+
+Install `bundler`:
+
+    gem install bundler
+
+Clone repository:
+
+    git clone https://git.yale.edu/spinup/ad_management.git
+
+Change to project directory:
+
+    cd ad_management
+
+Build package
+
+    bundle exec rake build
+
+
 ### Version
 
 #### 0.1.0
@@ -50,3 +69,7 @@ Initial version
 #### 0.2.0
 
 Added return values for `.delete`.
+
+#### 0.3.1
+
+Added return values for `.create`. Added `yardoc` comments for methods. Fixed `rubocop` offenses.
