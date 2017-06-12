@@ -73,3 +73,7 @@ Added return values for `.delete`.
 #### 0.3.1
 
 Added return values for `.create`. Added `yardoc` comments for methods. Fixed `rubocop` offenses.
+
+#### 0.4.0
+
+Added `.move_computer` method
