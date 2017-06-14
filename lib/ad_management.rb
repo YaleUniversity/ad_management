@@ -89,7 +89,7 @@ module  AdManagement
 
   # Move an ActiveDirectory computer object.
   #
-  # @param src_computer_cn [String] CommonName of ActiveDirectory computer to 
+  # @param src_computer_cn [String] CommonName of ActiveDirectory computer to
   #   be moved.
   # @param dst_computer_rdn [String] Relative DistinguishedName of destination
   #   renamed computer object.
@@ -101,7 +101,7 @@ module  AdManagement
     src_computer_dn = dn_from(src_computer_cn + '$')
     @ad_connection.rename(
       olddn: src_computer_dn,
-      newrdn: "CN=#{dst_computer_cn}", 
+      newrdn: "CN=#{dst_computer_cn}",
       delete_attributes: true,
       new_superior: dst_ou
     ) ? dn_from(dst_computer_cn + '$') : ''
