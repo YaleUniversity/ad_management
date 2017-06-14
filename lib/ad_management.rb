@@ -64,8 +64,8 @@ module  AdManagement
     computer_sam = computer_cn + '$'
     computer_dn = dn_from(computer_sam)
     return '' if computer_dn.nil?
-    @ad_connection.delete(dn: computer_dn)
-    return computer_dn if dn_from(computer_sam).nil?
+    return '' unless @ad_connection.delete(dn: computer_dn)
+    computer_dn
   end
 
   # Create an ActiveDirectory computer object.
@@ -83,7 +83,7 @@ module  AdManagement
       managedBy:        owner_id_dn,
       objectClass:      %w[computer organizationalPerson person top user]
     }
-    @ad_connection.add(dn: computer_dn, attributes: account_attrs)
+    return '' unless @ad_connection.add(dn: computer_dn, attributes: account_attrs)
     dn_from(computer_cn + '$')
   end
 
@@ -99,12 +99,13 @@ module  AdManagement
   #   of successfully renamed object.
   def self.move_computer(src_computer_cn, dst_computer_cn, dst_ou)
     src_computer_dn = dn_from(src_computer_cn + '$')
-    @ad_connection.rename(
+    return '' unless @ad_connection.rename(
       olddn: src_computer_dn,
       newrdn: "CN=#{dst_computer_cn}",
       delete_attributes: true,
       new_superior: dst_ou
-    ) ? dn_from(dst_computer_cn + '$') : ''
+    )
+    dn_from(dst_computer_cn + '$')
   end
 
   # @note The SAMAccountName of a computer object has a `$` character
@@ -120,6 +121,7 @@ module  AdManagement
       base:    @ad_settings[:base],
       filter:  filter
     ).first
-    entry && entry.dn || nil
+    return '' unless entry
+    entry.dn
   end
 end

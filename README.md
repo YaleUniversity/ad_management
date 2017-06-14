@@ -77,3 +77,7 @@ Added return values for `.create`. Added `yardoc` comments for methods. Fixed `r
 #### 0.4.0
 
 Added `.move_computer` method
+
+#### 0.4.1
+
+Standardized method returns; empty string returned for unsuccessful operation
