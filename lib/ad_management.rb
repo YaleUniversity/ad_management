@@ -113,9 +113,9 @@ module  AdManagement
   #   from that of a user object.
   #
   # Gets DistinguishedName of an ActiveDirectory object from its SAMAccountName.
-  # @param sam_account_name [String] CommonName of Computer or User object.
+  # @param sam_account_name: [String] CommonName of Computer or User object.
   # @return [String] DistinguishedName of object.
-  def self.dn_from(sam_account_name)
+  def self.dn_from(sam_account_name: nil)
     filter = Net::LDAP::Filter.eq('sAMAccountName', sam_account_name)
     entry = @ad_connection.search(
       base:    @ad_settings[:base],

@@ -14,4 +14,4 @@ AdManagement.configure_from('./config/connection_settings.yml')
 AdManagement.connect
 
 ## Display a computer accounts DistinguishedName
-puts AdManagement.dn_from(computer_cn + '$')
+puts AdManagement.dn_from(sam_account_name: computer_cn + '$')
