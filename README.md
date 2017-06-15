@@ -81,3 +81,7 @@ Added `.move_computer` method
 #### 0.4.1
 
 Standardized method returns; empty string returned for unsuccessful operation
+
+#### 1.0.0
+
+Initial release. Converted all method arguments to named keyword arguments. Minor change to `.move_computer`; if `target_cn:` of computer to be moved is unspecified, `target_cn:` defaults to value of `source_cn:`.
