@@ -57,12 +57,11 @@ module  AdManagement
 
   # Delete an ActiveDirectory computer object.
   #
-  # @param computer_cn [String] CommonName of computer object.
+  # @param target_cn: [String] CommonName of computer object.
   # @return [String] value, '' or DistinguishedName
   #   of successfully deleted object.
-  def self.delete_computer(computer_cn)
-    computer_sam = computer_cn + '$'
-    computer_dn = dn_from(computer_sam)
+  def self.delete_computer(target_cn: nil)
+    computer_dn = dn_from(sam_account_name: target_cn + '$')
     return '' if computer_dn.nil?
     return '' unless @ad_connection.delete(dn: computer_dn)
     computer_dn
