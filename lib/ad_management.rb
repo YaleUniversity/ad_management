@@ -70,21 +70,22 @@ module  AdManagement
 
   # Create an ActiveDirectory computer object.
   #
-  # @param owner_id [String] SAMAccountName of ActiveDirectory user.
-  # @param computer_cn [String] CommonName of computer object.
+  # @param owner_id: [String] SAMAccountName of ActiveDirectory user.
+  # @param target_cn: [String] CommonName of computer object.
+  # @param target_ou_dn: [String] DistinguishedName of OU to place computer object
   # @return [String] value, '' or DistinguishedName
   #   of successfully created object.
-  def self.create_computer(owner_id, computer_cn, ad_ou)
-    computer_dn = "CN=#{computer_cn},#{ad_ou}"
-    owner_id_dn = dn_from(owner_id)
+  def self.create_computer(owner_id: nil, target_cn: nil, target_ou_dn: nil)
+    computer_dn = "CN=#{target_cn},#{target_ou_dn}"
+    owner_id_dn = dn_from(sam_account_name: owner_id)
     account_attrs = {
-      cn:               computer_cn,
-      sAMAccountName:   computer_cn + '$',
+      cn:               target_cn,
+      sAMAccountName:   target_cn + '$',
       managedBy:        owner_id_dn,
       objectClass:      %w[computer organizationalPerson person top user]
     }
     return '' unless @ad_connection.add(dn: computer_dn, attributes: account_attrs)
-    dn_from(computer_cn + '$')
+    dn_from(sam_account_name: target_cn + '$')
   end
 
   # Move an ActiveDirectory computer object.
