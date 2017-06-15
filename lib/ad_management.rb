@@ -90,23 +90,23 @@ module  AdManagement
 
   # Move an ActiveDirectory computer object.
   #
-  # @param src_computer_cn [String] CommonName of ActiveDirectory computer to
+  # @param source_cn: [String] CommonName of ActiveDirectory computer to
   #   be moved.
-  # @param dst_computer_rdn [String] Relative DistinguishedName of destination
-  #   renamed computer object.
-  # @param dst_ou [String] destination OrganziationalUnit of destination
+  # @param target_cn: [String] CommonName of destination computer object;
+  #   If unspecified, defaults to source_cn value.
+  # @param target_ou_rdn: [String] destination OrganziationalUnit of destination
   #   computer object.
   # @return [String] value, '' or DistinguishedName
   #   of successfully renamed object.
-  def self.move_computer(src_computer_cn, dst_computer_cn, dst_ou)
-    src_computer_dn = dn_from(src_computer_cn + '$')
+  def self.move_computer(source_cn: nil, target_cn: source_cn, target_ou_rdn: nil)
+    src_computer_dn = dn_from(sam_account_name: source_cn + '$')
     return '' unless @ad_connection.rename(
       olddn: src_computer_dn,
-      newrdn: "CN=#{dst_computer_cn}",
+      newrdn: "CN=#{target_cn}",
       delete_attributes: true,
-      new_superior: dst_ou
+      new_superior: target_ou_rdn
     )
-    dn_from(dst_computer_cn + '$')
+    dn_from(sam_account_name: target_cn + '$')
   end
 
   # @note The SAMAccountName of a computer object has a `$` character
