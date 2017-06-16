@@ -93,17 +93,17 @@ module  AdManagement
   #   be moved.
   # @param target_cn: [String] CommonName of destination computer object;
   #   If unspecified, defaults to source_cn value.
-  # @param target_ou_rdn: [String] destination OrganziationalUnit of destination
+  # @param target_ou_dn: [String] destination OrganziationalUnit of destination
   #   computer object.
   # @return [String] value, '' or DistinguishedName
   #   of successfully renamed object.
-  def self.move_computer(source_cn: nil, target_cn: source_cn, target_ou_rdn: nil)
+  def self.move_computer(source_cn: nil, target_cn: source_cn, target_ou_dn: nil)
     src_computer_dn = dn_from(sam_account_name: source_cn + '$')
     return '' unless @ad_connection.rename(
       olddn: src_computer_dn,
       newrdn: "CN=#{target_cn}",
       delete_attributes: true,
-      new_superior: target_ou_rdn
+      new_superior: target_ou_dn
     )
     dn_from(sam_account_name: target_cn + '$')
   end
