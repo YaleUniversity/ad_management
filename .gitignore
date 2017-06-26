@@ -40,3 +40,6 @@ pkg/
 
 # YAML configuration files
 **/config/*.yml
+
+.ruby-version
+.ruby-gemset

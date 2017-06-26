@@ -1,7 +1,30 @@
----
-
 AllCops:
   Exclude:
     - bin/*
+    - ad_management.gemspec
+    - Gemfile
+    - Rakefile
 
-...
+LineLength:
+  Max: 130
+  Enabled: true
+MethodLength:
+  Max: 30
+BlockLength:
+  Enabled: false
+ClassLength:
+  Enabled: false
+ClassVars:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/BracesAroundHashParameters:
+  EnforcedStyle: context_dependent
+EmptyLinesAroundClassBody:
+  Enabled: false
+EmptyLinesAroundBlockBody:
+  Enabled: false
+EmptyLinesAroundModuleBody:
+  Enabled: false
+Metrics/AbcSize:
+  Max: 23

@@ -1,6 +1,6 @@
 # Yale ITS ActiveDirectory Management Gem
 
-This gem is a lightweight wrapper for the `net-ldap` gem. It simplifies connection to Microsoft ActiveDirectory directory services and management of directory objects.
+This gem is a lightweight wrapper for the `net-ldap` gem. It simplifies connection to Microsoft ActiveDirectory directory services and management of directory objects.  There is a `AdManagement::Client` class to abstract the client connection to LDAP and each managed object can be added as modules under the `AdManagement::Objects` namespace.
 
 ## Usage
 
@@ -37,9 +37,35 @@ The code can the be executed through `bundle`:
 
 Example code is contained in the `examples` folder. Each file illustrates basic usage.
 
-Before executing, it is required that you create a configuration YAML file to contain AD credentials and connection information used to create an AD ldap binding. The path to this file must be specified as a parameter to the `.configure_from` method.
+### CLI
 
-The template for these settings is `config\connection_settings.yml.txt`
+This gem provides the `ad` command.
+
+```
+ad help
+NAME
+    ad - Simple active directory object management.
+
+USAGE
+    ad [command, command, ...] [options] [arguments]
+
+DESCRIPTION
+    Provides access to active directory objects through the CLI.
+
+COMMANDS
+    computer     manage a computer object
+    help         show help
+
+OPTIONS
+       --basedn=<value>           BaseDN
+       --config_file=<value>      Location of a config (override env/flags)
+    -h --help                     show help for this command
+       --host=<value>             Active directory host
+       --loglevel=<value>         Log level (debug|info|warn|error)
+       --password=<value>         Password to use for Active directory bind
+       --port=<value>             Active directory port
+       --user=<value>             Username to use for Active directory bind
+```
 
 ### Development
 
@@ -85,3 +111,7 @@ Standardized method returns; empty string returned for unsuccessful operation
 #### 1.0.0
 
 Initial release. Converted all method arguments to named keyword arguments. Minor change to `.move_computer`; if `target_cn:` of computer to be moved is unspecified, `target_cn:` defaults to value of `source_cn:`.
+
+#### 2.0.0
+
+Added a client class and cli components

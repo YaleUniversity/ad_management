@@ -1,0 +1,81 @@
+#!/usr/bin/env ruby
+
+####
+# ad management cli
+# Provides  CLI access to Active Directory
+#
+# Usage:
+# ./ad command [command options] [arguments...]
+#
+
+require 'awesome_print'
+require 'ad_management'
+require 'cri'
+require 'yaml'
+require 'ostruct'
+require 'cli'
+
+include AdManagementCli
+
+SUBCOMMANDS = %w[ComputerCommands].freeze
+
+def configure(opts)
+  if opts[:config_file]
+    $stdout.puts "Reading configuration from #{opts[:config_file]}."
+    @config = OpenStruct.new(YAML.load_file(opts[:config_file]).merge(opts))
+  else
+    @config = OpenStruct.new(
+      host: opts[:host],
+      port: opts[:port] || 636,
+      base: opts[:basedn],
+      auth: {
+        user:     opts[:user],
+        password: opts[:password],
+        method:   :simple
+      },
+      encryption: {
+        method: :simple_tls,
+        tls_options: {
+          verify_mode: 1,
+          ssl_version: 'TLSv1_2'
+        }
+      },
+      loglevel: opts[:loglevel] || 'warn'
+    )
+  end
+end
+
+def ad
+  a = AdManagement::Client.new(@config.to_h).connect!
+  yield(a)
+rescue => e
+  raise e if @config[:loglevel] == 'debug'
+  exit_2("Ad Management Error: #{e.message}")
+end
+
+def exit_2(msg)
+  $stderr.puts msg
+  exit 2
+end
+
+root_cmd = Cri::Command.new_basic_root.modify do
+  name        'ad'
+  usage       'ad [command, command, ...] [options] [arguments]'
+  summary     'Simple active directory object management.'
+  description 'Provides access to active directory objects through the CLI.'
+
+  option nil, :config_file, 'Location of a config (override env/flags)', argument: :required
+  option nil, :host, 'Active directory host', argument: :required
+  option nil, :port, 'Active directory port', argument: :required
+  option nil, :user, 'Username to use for Active directory bind', argument: :required
+  option nil, :password, 'Password to use for Active directory bind', argument: :required
+  option nil, :basedn, 'BaseDN', argument: :required
+  option nil, :loglevel, 'Log level (debug|info|warn|error)', argument: :required
+end
+
+SUBCOMMANDS.each do |m|
+  m_cmd = Object.const_get(m).instance_method(:define_root).bind(self).call(root_cmd)
+  Object.const_get(m).instance_method(:define_sub).bind(self).call(m_cmd)
+end
+
+root_cmd.run(ARGV)
