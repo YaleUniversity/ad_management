@@ -39,7 +39,8 @@ module AdManagement
             objectClass: %w[computer organizationalPerson person top user],
             cn: cn,
             sAMAccountName: cn + '$',
-            managedBy: managed_by_dn
+            managedBy: managed_by_dn,
+            userAccountControl: '4096'
           }
         )
         return "CN=#{cn},#{ou}" if result
