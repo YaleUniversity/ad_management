@@ -5,10 +5,10 @@ module AdManagement
     module Computer
       ##
       # Gets the dn of a computer object
-      def get(sam_account_name)
-        raise AdManagement::ArgumentError, 'Required parameter sam_account_name not provided!' if sam_account_name.nil?
-        @logger.info("Getting DN of #{sam_account_name}")
-        dn = search(sam_account_name + '$').first&.dn || ''
+      def get(cn)
+        raise AdManagement::ArgumentError, 'Required parameter cn not provided!' if cn.nil?
+        @logger.info("Getting DN of #{cn}")
+        dn = search(cn + '$').first&.dn || ''
         dn
       end
 
