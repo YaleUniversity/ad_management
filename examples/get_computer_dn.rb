@@ -26,4 +26,4 @@ computer_cn = '__ComputerCN__'
 c = AdManagement::Client.new(conf).connect!
 
 ## Display a computer accounts DistinguishedName
-puts c.get(computer_cn + '$')
+puts c.get(computer_cn)
