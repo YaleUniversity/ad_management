@@ -91,7 +91,7 @@ module AdManagement
       private
 
       def to_hash(entry)
-        return '' if entry.nil?
+        return {} if entry.nil?
         hash = {}
         entry.each { |k, v| hash[k] = v }
         hash
