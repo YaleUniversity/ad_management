@@ -4,12 +4,11 @@ module AdManagement
     # Helper methods for manipulating computer objects in AD
     module Computer
       ##
-      # Gets the dn of a computer object
+      # Gets all attributes for a computer object
       def get(cn)
         raise AdManagement::ArgumentError, 'Required parameter cn not provided!' if cn.nil?
-        @logger.info("Getting DN of #{cn}")
-        dn = search(cn + '$').first&.dn || ''
-        dn
+        @logger.info("Getting attributes for #{cn}")
+        to_hash(search(cn + '$', nil).first)
       end
 
       ##
@@ -87,6 +86,15 @@ module AdManagement
         msg = "Failed to move #{cn}: (#{@client.get_operation_result.code}) #{@client.get_operation_result.message}"
         @logger.error msg
         raise AdManagement::OperationError, msg
+      end
+
+      private
+
+      def to_hash(entry)
+        return {} if entry.nil?
+        hash = {}
+        entry.each { |k, v| hash[k] = v }
+        hash
       end
     end
   end

@@ -57,8 +57,8 @@ module AdManagementCli
       cmd.define_command do
         name    'get'
         usage   'get [options] sAMAccountName'
-        summary 'gets computer by sAMAccountName'
-        description 'returns the DN of a computer object by searching for the sAMAccountName'
+        summary 'gets all attributes for a computer'
+        description 'returns all attributes of a computer object by searching for the sAMAccountName'
 
         run do |opts, args|
           exit_2 'Get requires the CN be specified' unless args.size == 1

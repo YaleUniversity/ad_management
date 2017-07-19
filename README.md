@@ -115,3 +115,12 @@ Initial release. Converted all method arguments to named keyword arguments. Mino
 #### 2.0.0
 
 Added a client class and cli components
+
+#### 3.0.0
+
+- Changed `Computer#get` to use CN instead of sAMAccountName
+- Fixed `Computer#create` to create a proper computer object with userAccountControl 4096
+
+#### 4.0.0
+
+Changed `Computer#get` to return all attributes for a computer object
