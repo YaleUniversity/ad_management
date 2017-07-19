@@ -66,6 +66,19 @@ module AdManagementCli
           ap(ad { |c| c.get(args.first) })
         end
       end
+
+      cmd.define_command do
+        name    'get_all'
+        usage   'get_all [options] sAMAccountName'
+        summary 'gets all attributes for a computer'
+        description 'returns all attributes of a computer object by searching for the sAMAccountName'
+
+        run do |opts, args|
+          exit_2 'Get requires the CN be specified' unless args.size == 1
+          configure(opts)
+          ap(ad { |c| c.get_all(args.first) })
+        end
+      end
     end
   end
 end

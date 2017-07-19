@@ -13,6 +13,14 @@ module AdManagement
       end
 
       ##
+      # Gets all attributes for a computer object
+      def get_all(cn)
+        raise AdManagement::ArgumentError, 'Required parameter cn not provided!' if cn.nil?
+        @logger.info("Getting attributes for #{cn}")
+        to_hash(search(cn + '$', nil).first) || ''
+      end
+
+      ##
       # Checks if a server exists by CN, searching is done by the objects sAMAccountName$
       def exists?(cn)
         raise AdManagement::ArgumentError, 'Required parameter cn not provided!' if cn.nil?
@@ -87,6 +95,14 @@ module AdManagement
         msg = "Failed to move #{cn}: (#{@client.get_operation_result.code}) #{@client.get_operation_result.message}"
         @logger.error msg
         raise AdManagement::OperationError, msg
+      end
+
+      private
+
+      def to_hash(entry)
+        hash = {}
+        entry.each { |k, v| hash[k] = v }
+        hash
       end
     end
   end
