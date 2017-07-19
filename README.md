@@ -121,6 +121,6 @@ Added a client class and cli components
 - Changed `Computer#get` to use CN instead of sAMAccountName
 - Fixed `Computer#create` to create a proper computer object with userAccountControl 4096
 
-#### 3.1.0
+#### 4.0.0
 
-Added `Computer#get_all` to return all attributes for a computer object
+Changed `Computer#get` to return all attributes for a computer object

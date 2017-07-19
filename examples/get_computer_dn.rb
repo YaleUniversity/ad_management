@@ -25,5 +25,5 @@ computer_cn = '__ComputerCN__'
 ## Create a new ad_manager instance using service account credentials
 c = AdManagement::Client.new(conf).connect!
 
-## Display a computer accounts DistinguishedName
+## Display a computer account's attributes
 puts c.get(computer_cn)
