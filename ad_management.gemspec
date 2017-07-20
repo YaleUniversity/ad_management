@@ -6,8 +6,8 @@ require 'ad_management/version'
 Gem::Specification.new do |spec|
   spec.name          = 'ad_management'
   spec.version       = AdManagement::VERSION
-  spec.authors       = ['Vincent Balbarin', 'E. Camden Fisher']
-  spec.email         = ['vincent.balbarin@yale.edu', 'camden.fisher@yale.edu']
+  spec.authors       = ['Vincent Balbarin', 'E. Camden Fisher', 'Tenyo Grozev']
+  spec.email         = ['vincent.balbarin@yale.edu', 'camden.fisher@yale.edu', 'tenyo.grozev@yale.edu']
 
   spec.summary       = %q{Active Directory Management}
   spec.description   = %q{This gem is light wrapper for `net-ldap` Ruby. It allows for the management of MS ActiveDirectory}

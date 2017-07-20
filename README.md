@@ -124,3 +124,7 @@ Added a client class and cli components
 #### 4.0.0
 
 Changed `Computer#get` to return all attributes for a computer object
+
+#### 4.1.0
+
+Added methods for Computer attributes manipulation
