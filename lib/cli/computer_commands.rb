@@ -13,6 +13,45 @@ module AdManagementCli
 
     def define_sub(cmd)
       cmd.define_command do
+        name 'attribute_add'
+        usage   'attribute_add cn attribute value'
+        summary 'adds an attribute to a computer object'
+        description 'Adds an attribute with the provided value to an existing computer object'
+
+        run do |opts, args|
+          exit_2 'attribute_add requires the CN, attribute and value be specified' unless args.size == 3
+          configure(opts)
+          ap(ad { |c| c.attribute_add(args[0], args[1], args[2]) })
+        end
+      end
+
+      cmd.define_command do
+        name 'attribute_delete'
+        usage   'attribute_delete cn attribute'
+        summary 'deletes an attribute from a computer object'
+        description 'Deletes an attribute from a computer object'
+
+        run do |opts, args|
+          exit_2 'attribute_delete requires the CN and attribute be specified' unless args.size == 2
+          configure(opts)
+          ap(ad { |c| c.attribute_delete(args[0], args[1]) })
+        end
+      end
+
+      cmd.define_command do
+        name 'attribute_replace'
+        usage   'attribute_replace cn attribute value'
+        summary 'replace an attribute in a computer object'
+        description 'Replaces an attribute with the provided value in a computer object. If the attribute doesn\'t exists it will be created'
+
+        run do |opts, args|
+          exit_2 'attribute_replace requires the CN, attribute and value be specified' unless args.size == 3
+          configure(opts)
+          ap(ad { |c| c.attribute_replace(args[0], args[1], args[2]) })
+        end
+      end
+
+      cmd.define_command do
         name    'create'
         usage   'create cn ou managed_by'
         summary 'add a computer object'

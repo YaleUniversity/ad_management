@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - bin/*
+    - lib/cli/computer_commands.rb
     - ad_management.gemspec
     - Gemfile
     - Rakefile

@@ -2,7 +2,74 @@ module AdManagement
   module Objects
     ##
     # Helper methods for manipulating computer objects in AD
+    # rubocop:disable Metrics/ModuleLength
     module Computer
+      ##
+      # Adds a new attribute to a computer object
+      def attribute_add(cn, attribute, value)
+        if cn.nil? || attribute.nil? || value.nil?
+          raise AdManagement::ArgumentError, 'Required attribute_add parameter(s) not provided!'
+        end
+        dn = search(cn + '$').first&.dn
+        raise AdManagement::NotFoundError, "CN (#{cn}) was not found" if dn.nil?
+
+        @logger.info("Adding attribute #{attribute}=#{value} to #{dn}")
+        result = @client.add_attribute(dn, attribute, value)
+        return dn if result
+
+        msg = "Failed to add attribute to #{cn}: " \
+          "(#{@client.get_operation_result.code}) #{@client.get_operation_result.message}"
+        @logger.error msg
+        raise AdManagement::OperationError, msg
+      end
+
+      ##
+      # Deletes an attribute from a computer object
+      def attribute_delete(cn, attribute)
+        if cn.nil? || attribute.nil?
+          raise AdManagement::ArgumentError, 'Required attribute_delete parameter(s) not provided!'
+        end
+        dn = search(cn + '$').first&.dn
+        raise AdManagement::NotFoundError, "CN (#{cn}) was not found" if dn.nil?
+
+        @logger.info("Deleting attribute #{attribute} from #{dn}")
+        result = @client.delete_attribute(dn, attribute)
+        return dn if result
+
+        msg = "Failed to delete attribute from #{cn}: " \
+          "(#{@client.get_operation_result.code}) #{@client.get_operation_result.message}"
+        @logger.error msg
+        raise AdManagement::OperationError, msg
+      end
+
+      ##
+      # Checks if the specified attribute exists in a computer object
+      def attribute_exists?(cn, attribute)
+        if cn.nil? || attribute.nil?
+          raise AdManagement::ArgumentError, 'Required attribute_exists? parameter(s) not provided!'
+        end
+        get(cn).key? attribute.downcase.to_sym
+      end
+
+      ##
+      # Replaces (or adds if it doesn't exist) an attribute in a computer object
+      def attribute_replace(cn, attribute, value)
+        if cn.nil? || attribute.nil? || value.nil?
+          raise AdManagement::ArgumentError, 'Required attribute_replace parameter(s) not provided!'
+        end
+        dn = search(cn + '$').first&.dn
+        raise AdManagement::NotFoundError, "CN (#{cn}) was not found" if dn.nil?
+
+        @logger.info("Replacing attribute #{attribute}=#{value} in #{dn}")
+        result = @client.replace_attribute(dn, attribute, value)
+        return dn if result
+
+        msg = "Failed to replace attribute in #{cn}: " \
+          "(#{@client.get_operation_result.code}) #{@client.get_operation_result.message}"
+        @logger.error msg
+        raise AdManagement::OperationError, msg
+      end
+
       ##
       # Gets all attributes for a computer object
       def get(cn)
@@ -21,6 +88,7 @@ module AdManagement
 
       ##
       # Implements basic AD computer object creation
+      # rubocop:disable Metrics/CyclomaticComplexity
       def create(cn, ou, managed_by)
         @logger.info("Creating CN=#{cn},#{ou} managed by #{managed_by}")
         if cn.nil? || ou.nil? || managed_by.nil?
@@ -48,6 +116,7 @@ module AdManagement
         @logger.error msg
         raise AdManagement::OperationError, msg
       end
+      # rubocop:enable Metrics/CyclomaticComplexity
 
       ##
       # Deletes an AD computer object by CN, searching is done by the objects sAMAccountName$
